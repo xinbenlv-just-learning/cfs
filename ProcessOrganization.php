@@ -7,7 +7,7 @@
 
 	<body>
 		<?php
-			$isGpc = get_magic_quotes_gpc();
+			include_once("./Default.php");
 			
 			$orgName = GetValue($_POST["OrgName"]);
 			$websiteEn = GetValue($_POST["websiteEn"]);
@@ -34,22 +34,6 @@
 			$stmt->bind_param("issssss", $null = NULL, $orgName, $websiteEn, $websiteCh, $geo, $orginalCountry, $area);
 			$stmt->execute();
 			$stmt->close();
-			
-			function GetValue($data) {
-				if (IsNullOrUndefined($data))
-					$data = 0;
-				
-				global $isGpc;
-				$data = trim($data);
-				if (!$isGpc)
-					$data = addslashes($data);
-				
-				return $data;
-			}
-			
-			function IsNullOrUndefined($data) {
-				return $data === NULL;
-			}
 		?>
 	</body>
 </html>

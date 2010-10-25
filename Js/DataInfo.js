@@ -1,9 +1,9 @@
 // JavaScript Document
 
-const DataInfoFilepath = MetaDataDirPath + "DataInfo.json";
+const DataInfoFilePath = MetaDataDirPath + "DataInfo.json";
 
 $(document).ready(function() {
-	$.getJSON(DataInfoFilepath, function(data, textStatus) {
+	$.getJSON(DataInfoFilePath, function(data, textStatus) {
 		$("td.LanguageList").createSelectOption(data.LanguageList, "Language", false);
 		$("td.NameList").createSelectOption(data.NameList, "Name");
 		$("td.Collector select").attr("name", "Collector");

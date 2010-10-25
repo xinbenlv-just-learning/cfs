@@ -1,9 +1,9 @@
 // JavaScript Document
 
-const OrganizationFilepath = MetaDataDirPath + "Organization.json";
+const OrganizationFilePath = MetaDataDirPath + "Organization.json";
 
 $(document).ready(function() {
-	$.getJSON(OrganizationFilepath, function(data, textStatus) {
+	$.getJSON(OrganizationFilePath, function(data, textStatus) {
 		$("td.OrgTypeList").createSelectOption(data.OrgTypeList, "OrgType");
 		$("td.GeoList").createMultipleSelect(data.GeoList, "Geo");
 		
