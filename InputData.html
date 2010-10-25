@@ -3,12 +3,12 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title> Input Data Row </title>
-		<link rel="stylesheet" type="text/css" href="./Css/default.css" />
+		<link rel="stylesheet" type="text/css" href="./Css/Default.css" />
 		<link rel="stylesheet" type="text/css" href="./Css/InputData.css" />
 	</head>
 
 	<body>
-		<form id="Organization">
+		<form id="Organization" action="./Result.php" method="post">
 			<table>
 				<thead>
 					<tr>
@@ -21,18 +21,18 @@
 				<tbody>
 					<tr>
 						<td> Organization Name </td>
-						<td> <input /> </td>
+						<td> <input name="OrgName" /> </td>
 						<td> Required </td>
 					</tr>
 					
 					<tr>
 						<td> English Website </td>
-						<td> <input /> </td>
+						<td> <input name="websiteEn" /> </td>
 					</tr>
 					
 					<tr>
 						<td> Chinese Website </td>
-						<td> <input /> </td>
+						<td> <input name="websiteCh" /> </td>
 					</tr>
 					
 					<tr>
@@ -48,7 +48,7 @@
 					
 					<tr>
 						<td> Country of Orgin </td>
-						<td> <input /> </td>
+						<td> <input name="OrginalCountry" /> </td>
 					</tr>
 					
 					<tr>
@@ -76,7 +76,7 @@
 					
 					<tr>
 						<td> Number of Offices in China </td>
-						<td> <input /> </td>
+						<td> <input name="NumOffices" /> </td>
 					</tr>
 					
 					<tr>
@@ -86,13 +86,13 @@
 					
 					<tr>
 						<td> Collector </td>
-						<td class="NameList"> </td>
+						<td class="NameList Collector"> </td>
 						<td> Required </td>
 					</tr>
 					
 					<tr>
 						<td> Reviewer </td>
-						<td class="NameList"> </td>
+						<td class="NameList Reviewer"> </td>
 					</tr>
 					
 					<tr>
@@ -102,6 +102,9 @@
 					</tr>
 				</tbody>
 			</table>
+			
+			<input type="submit" name="submit" value="Submit" />
+			<input type="reset" name="reset" id="reset" value="Reset" />
 		</form>
 	</body>
 	

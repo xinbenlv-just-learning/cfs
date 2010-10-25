@@ -6,5 +6,50 @@
 	</head>
 
 	<body>
+		<?php
+			$isGpc = get_magic_quotes_gpc();
+			
+			$orgName = GetValue($_POST["OrgName"]);
+			$websiteEn = GetValue($_POST["websiteEn"]);
+			$websiteCh = GetValue($_POST["websiteCh"]);
+			@$geo = GetValue($_POST["Geo"]);
+			$orginalCountry = GetValue($_POST["OrginalCountry"]);
+			$area = GetValue($_POST["Area"]);
+			@$subArea = GetValue($_POST["SubArea"]);
+			$numOffices = GetValue($_POST["NumOffices"]);
+			
+			$language = GetValue($_POST["Language"]);
+			$collector = GetValue($_POST["Collector"]);
+			$reviewer = GetValue($_POST["Reviewer"]);
+			$status = GetValue($_POST["Status"]);
+			
+			@$db = new mysqli("localhost", "chinafundseeker_admin", "admin", "chinafundseeker_database");
+			if ($errno = mysqli_connect_errno()) {
+				echo "Failed to connect to database. Error number is $errno. Please contact with me: ma86jian@gmail.com";
+				exit;
+			}
+			
+			$query = "insert into organization values (?, ?, ?, ?, ?, ?, ?)";
+			$stmt = $db->prepare($query);
+			$stmt->bind_param("issssss", $null = NULL, $orgName, $websiteEn, $websiteCh, $geo, $orginalCountry, $area);
+			$stmt->execute();
+			$stmt->close();
+			
+			function GetValue($data) {
+				if (IsNullOrUndefined($data))
+					$data = 0;
+				
+				global $isGpc;
+				$data = trim($data);
+				if (!$isGpc)
+					$data = addslashes($data);
+				
+				return $data;
+			}
+			
+			function IsNullOrUndefined($data) {
+				return $data === NULL;
+			}
+		?>
 	</body>
 </html>

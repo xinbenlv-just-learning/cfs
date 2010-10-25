@@ -1,14 +1,15 @@
 // JavaScript Document
 
-var MetaDataDirPath = "./MetaData/";
+const MetaDataDirPath = "./MetaData/";
 
-$.fn.createSelectOption = function(list, isAddEmpty) {
+
+$.fn.createSelectOption = function(list, name, isAddEmpty) {
 	if (IsNullOrUndefined(list))
 		return;
 	
 	isAddEmpty = (isAddEmpty != undefined) ? isAddEmpty : true;
 	
-	var selection = $("<select>");
+	var selection = $("<select>").attr("name", name);
 	if (isAddEmpty) {
 		selection.append("<option>[ Select One ]</option>");
 	}
@@ -16,12 +17,12 @@ $.fn.createSelectOption = function(list, isAddEmpty) {
 	$(this).append(selection.createOptions(list));
 }
 
-$.fn.createMultipleSelect = function(list) {
+$.fn.createMultipleSelect = function(list, name) {
 	if (IsNullOrUndefined(list))
 		return;
 	
 	var source = $('<select class="Source" multiple="multiple" size="10">').createOptions(list);
-	var selected = $('<select class="Selected" multiple="multiple" size="10">');
+	var selected = $('<select class="Selected" multiple="multiple" size="10">').attr("name", name)
 	
 	var buttonAdd = $('<input type="button">').attr("value", ">");
 	var buttonAddAll = $('<input type="button">').attr("value", ">>");
