@@ -1,0 +1,127 @@
+{
+	"OrgTypeList":
+	[
+		"Corporate Donor",
+		"GONGO",
+		"Government Agency",
+		"Intergovernmental Organization",
+		"Nonprofit and Nongovernmental Organization",
+		"Private Foundation",
+		"Public Foundation"
+	],
+	
+	"GeoList":
+	[
+		"TBD",
+		"China in General",
+		"East China",
+		"North China",
+		"Northeastern China",
+		"Northwestern China",
+		"South China",
+		"Southeastern China",
+		"Southwestern China",
+		"West China",
+		"Anhui",
+		"Beijing",
+		"Chongqing",
+		"Fujian",
+		"Gansu",
+		"Guangdong",
+		"Guizhou",
+		"Hainan",
+		"Hebei",
+		"Heilongjiang",
+		"Henan",
+		"Hongkong",
+		"Hubei",
+		"Hunan",
+		"Jiangsu",
+		"Jiangxi",
+		"Jilin",
+		"Liaoning",
+		"Macau",
+		"Qinghai",
+		"Shaanxi",
+		"Shandong",
+		"Shanghai",
+		"Shanxi",
+		"Sichuan",
+		"Tianjin",
+		"Yunnan",
+		"Zhejiang",
+		"Guangxi",
+		"Inner Mongolia",
+		"Ningxia Hui",
+		"Xinjiang Uighur",
+		"Taiwan",
+		"Tibet"
+	],
+	
+	"AreaList":
+	[
+		"Arts",
+		"Child and Youth",
+		"Civil Society Development",
+		"Culture",
+		"Disaster Response and Recovery",
+		"Education",
+		"Environment",
+		"Ethnic Minority Culture and Development",
+		"Governance, Law and Rights",
+		"Health",
+		"LGBT Rights",
+		"People with Disabilities",
+		"Religion",
+		"Rural Development",
+		"Science and Technology",
+		"Services for Older People",
+		"Social Entrepreneurship",
+		"Urban Community Welfare",
+		"Volunteer Placement",
+		"Women"
+	],
+	
+	"SubAreaList":
+	{
+		"Education":
+		[
+			"All Subareas",
+			"Early Childhood Education",
+			"Elementary and Secondary Education",
+			"Higher Education",
+			"Vocational Training",
+			"Other"
+		],
+		
+		"Environment":
+		[
+			"All Subareas",
+			"Animals",
+			"Climate",
+			"Energy",
+			"Natural Resources",
+			"Other"
+		],
+				
+		"Health":
+		[
+			"All Subareas",
+			"Cancers",
+			"HIV/AIDS",
+			"Mental Health",
+			"Reproductive Health",
+			"Other"
+		],
+		
+		"Child and Youth":
+		[
+			"Child Protection",
+			"Disaster Relief",
+			"Education",
+			"Health and Nutrition",
+			"Homes and Orphanages",
+			"Community Development"
+		]
+	}
+}

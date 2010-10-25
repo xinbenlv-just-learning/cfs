@@ -1,0 +1,28 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {
+//	text-align: center;
+}
+
+td.Mutiple select {
+	width: 200px;
+	float: left;
+}
+
+td.Mutiple select option {
+	text-align: left;
+}
+
+td.Mutiple div {
+	width: 35px;
+	margin: 15px 10px;
+	float: left;
+}
+
+td.Mutiple input {
+	display: block;
+	width: inherit;
+	margin: 4px 0px;
+	float: left;
+}
