@@ -46,7 +46,9 @@ $.fn.createMultipleSelect = function(list, name) {
 		source.append($("option", selected).attr("selected", "selected"));
 	});
 	
-	return $(this).addClass("Mutiple").append(source, buttons, selected);
+	return $(this).append(
+		$("<div class='Multiple'>").append(source, buttons, selected)
+	);
 }
 
 $.fn.createOptions = function (list) {
