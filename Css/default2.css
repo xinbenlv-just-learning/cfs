@@ -1,0 +1,40 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {
+//	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+	margin: 0px auto;
+	width: 1100px;
+}
+
+
+/* for mutilple choice */
+div.Multiple {
+	display: block;
+}
+
+div.Multiple select {
+	width: 200px;
+	float: left;
+}
+
+div.Multiple select option {
+	text-align: left;
+}
+
+div.Multiple div {
+	width: 35px;
+	margin: 15px 10px;
+	float: left;
+}
+
+div.Multiple input {
+	display: block;
+	width: inherit;
+	margin: 4px 0px;
+	float: left;
+}
