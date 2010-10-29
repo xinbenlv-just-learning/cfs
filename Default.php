@@ -22,7 +22,13 @@
 			}
 			
 			function IsNullOrUndefined($data) {
-				return $data === NULL;
+				return $data == NULL;
+			}
+			
+			function CreateTd($td) {
+				echo "<td>";
+				echo $td;
+				echo "</td>";
 			}
 		?>
 	</body>

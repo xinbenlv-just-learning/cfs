@@ -10,8 +10,9 @@
 			include_once("./Default.php");
 			
 			$orgName = GetValue($_POST["OrgName"]);
-			$websiteEn = GetValue($_POST["websiteEn"]);
-			$websiteCh = GetValue($_POST["websiteCh"]);
+			$websiteEn = GetValue($_POST["WebsiteEn"]);
+			$websiteCh = GetValue($_POST["WebsiteCh"]);
+			$orgTypeList = GetValue($_POST["OrgTypeList"]);
 			@$geo = GetValue($_POST["Geo"]);
 			$orginalCountry = GetValue($_POST["OrginalCountry"]);
 			$area = GetValue($_POST["Area"]);
@@ -29,11 +30,13 @@
 				exit;
 			}
 			
-			$query = "insert into organization values (?, ?, ?, ?, ?, ?, ?)";
+			$query = "insert into organization values (?, ?, ?, ?, ?, ?, ?, ?)";
 			$stmt = $db->prepare($query);
-			$stmt->bind_param("issssss", $null = NULL, $orgName, $websiteEn, $websiteCh, $geo, $orginalCountry, $area);
+			$stmt->bind_param("issssss", $null = NULL, $orgName, $websiteEn, $websiteCh, $orgTypeList, $geo, $orginalCountry, $area);
 			$stmt->execute();
 			$stmt->close();
+			
+			$db->close();
 		?>
 	</body>
 </html>
