@@ -15,7 +15,6 @@ Structure of ChinaFundSeeker
 5 Php
 	This folder contains functional php files used by the website.
 
-6 www
-	This folder contains files, which can be accessed by the user.
-	It increase security,
-	because user can not access other files outside www folder in browser.
+6 root
+	This folder contains webpage files, which can be accessed by the user.
+	

@@ -7,7 +7,7 @@
 	</head>
 
 	<body>
-		<form id="login" action="./ProcessLogin.php" method="post">
+		<form id="login" action="./Php/ProcessLogin.php" method="post">
 			<table>
 				<tbody>
 					<tr>
