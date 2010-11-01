@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title> Organization List </title>
-		<link rel="stylesheet" type="text/css" href="./Css/default.css" />
+		<link rel="stylesheet" type="text/css" href="./Css/Default.css" />
 		<link rel="stylesheet" type="text/css" href="./Css/ListOrganization.css" />
 	</head>
 
