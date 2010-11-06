@@ -10,6 +10,13 @@
 		"Public Foundation"
 	],
 	
+	"GranteeTypeList":
+	[
+		"Individual",
+		"Organization",
+		"Individual and Organization"
+	],
+	
 	"GeoList":
 	[
 		"TBD",
@@ -73,6 +80,7 @@
 		"LGBT Rights",
 		"People with Disabilities",
 		"Religion",
+		"Research",
 		"Rural Development",
 		"Science and Technology",
 		"Services for Older People",

@@ -22,7 +22,7 @@ $.fn.createMultipleSelect = function(list, name) {
 		return;
 	
 	var source = $('<select class="Source" multiple="multiple" size="10">').createOptions(list);
-	var selected = $('<select class="Selected" multiple="multiple" size="10">').attr("name", name)
+	var selected = $('<select class="Selected" multiple="multiple" size="10">');
 	
 	var buttonAdd = $('<input type="button">').attr("value", ">");
 	var buttonAddAll = $('<input type="button">').attr("value", ">>");
@@ -31,19 +31,33 @@ $.fn.createMultipleSelect = function(list, name) {
 	var buttons = $("<div>").append(buttonAdd, buttonAddAll, buttonRemove, buttonRemoveAll);
 	
 	buttonAdd.click(function() {
-		selected.append($("option:selected", source));
+		var add = $("option:selected", source);
+		
+		add.each(function(index, element) {
+			selected.append(
+				element,
+				$("<input type='hidden' name='" + name + "[]' value='" + element.text + "'>")
+			);
+		});
 	});
 	
 	buttonAddAll.click(function() {
-		selected.append($("option", source).attr("selected", "selected"));
+		$("option", source).attr("selected", "selected");
+		buttonAdd.click();
 	});
 	
 	buttonRemove.click(function() {
-		source.append($("option:selected", selected));
+		var remove = $("option:selected", selected);
+		
+		remove.each(function(index, element) {
+			$(element).next().remove();
+			source.append(element);
+		});
 	});
 	
 	buttonRemoveAll.click(function() {
-		source.append($("option", selected).attr("selected", "selected"));
+		$("option", selected).attr("selected", "selected");
+		buttonRemove.click();
 	});
 	
 	return $(this).append(
