@@ -1,32 +1,126 @@
 @charset "utf-8";
 /* CSS Document */
 
-table {
+table#Organization {
 	width: 100%;
 	border-collapse: collapse;
 	margin: 20px auto;
 }
 
-table * {
+table#Organization * {
 //	font-size: 15.5px;
 }
 
-table thead tr {
+table#Organization > thead tr {
 	font-size: 24px;
 	height: 50px;
 }
 
-table tbody tr {
+table#Organization th#FieldName {
+	width: 26%;
+}
+
+table#Organization th#Value {
+	width: 54%;
+}
+
+table#Organization th#Comments {
+	width: 20%;
+}
+
+table#Organization > tbody tr {
 	border: thin solid black;
 }
 
-table tbody tr td {
+table#Organization > tbody tr td.first {
 	padding: 0px 40px;
 	text-align: left;
 	border: thin solid black;
 }
 
-table tbody tr td div,
-table tbody tr td input {
+table#Organization > tbody tr td.firstIndent {
+	padding: 0px 70px;
+	text-align: left;
+	border: thin solid black;
+}
+
+table#Organization > tbody tr td.first > div,
+table#Organization > tbody tr td.first > input,
+table#Organization > tbody tr td.first > textarea {
 	width: 100%;
+}
+
+table.Assets {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+input.AddAssets,
+input.AddGiving {
+	width: 80px;
+}
+
+/* table Assets */
+table.Assets * {
+	text-align: center;
+}
+
+table.Assets thead th.AssetsYear {
+	width: 30%;
+}
+
+table.Assets thead th.AssetsAmount {
+	width: 45%;
+}
+
+table.Assets thead th.AssetsAction {
+	width: 25%;
+}
+
+table.Assets tbody tr td {
+	border: thin solid black;
+}
+
+table.Assets tbody td .AssetsYearInput,
+table.Assets tbody td .AssetsAmountInput,
+table.Assets tbody td .AssetsDeleteButton {
+	width: 90%;
+}
+
+
+/* table.Giving */
+table.Giving {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+table.Giving * {
+	text-align: center;
+}
+
+table.Giving thead th.GivingYear {
+	width: 20%;
+}
+
+table.Giving thead th.GivingWorldwide {
+	width: 30%;
+}
+
+table.Giving thead th.GivingInChina {
+	width: 30%;
+}
+
+table.Giving thead th.GivingAction {
+	width: 20%;
+}
+
+table.Giving tbody tr td {
+	border: thin solid black;
+}
+
+table.Giving tbody tr td .GivingYearInput,
+table.Giving tbody tr td .GivingWorldwideInput,
+table.Giving tbody tr td .GivingInChinaInput,
+table.Giving tbody tr td .GivingDeleteButton {
+	width: 90%;
 }
