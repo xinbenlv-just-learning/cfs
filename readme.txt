@@ -12,9 +12,10 @@ Structure of ChinaFundSeeker
 	This folder contains all meta-data used by the website.
 	The meta-data is used to describe the data (currently in json format).
 
-5 Php
+5 PhpLib
 	This folder contains functional php files used by the website.
+	Put it outside of the wwwroot as security consideration, because users can not access it from borrowser.
 
-6 root
-	This folder contains webpage files, which can be accessed by the user.
+6 wwwroot
+	This folder contains webpage files, which can be accessed by users.
 	
