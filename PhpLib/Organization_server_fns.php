@@ -96,7 +96,7 @@
 			$org["assets"] = get_org_assets_from_db($db, $row["id"]);
 			$org["giving"] = get_org_giving_from_db($db, $row["id"]);
 			
-			$org["numOffices"] = intval($row["num_offices_china"]);
+			$org["numOffices"] = $row["num_offices_china"];
 			
 			$org["cnContact"] = get_contact_from_db($db, $row["china_contact_id"]);
 			$org["hqContact"] = get_contact_from_db($db, $row["hq_contact_id"]);
@@ -105,6 +105,14 @@
 		}
 		
 		return $org;
+	}
+	
+	function get_org_name_from_db_new_connect($id) {
+		$db = connect_db();
+		$name = get_org_name_from_db($db, $id);
+		$db->close();
+		
+		return $name;
 	}
 	
 	function get_org_name_from_db($db, $id) {

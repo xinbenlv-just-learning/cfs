@@ -26,6 +26,7 @@ table tbody tr td {
 	border: thin solid black;
 }
 
-table tbody tr td input {
+table tbody tr td input,
+table tbody tr td textarea {
 	width: 100%;
 }

@@ -13,7 +13,7 @@
 		
 		$recipients = array();
 		$recipients["id"] = intval($row["id"]);
-		$recipients["name"] = $row["name"];
+		$recipients["name"] = GetOriginalString($row["name"]);
 		$recipients["year"] = $row["year"];
 		$recipients["giving"] = $row["total_giving"];
 		

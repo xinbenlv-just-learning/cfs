@@ -5,11 +5,11 @@
 		
 		$stmt->bind_param("isssss",
 			$null = NULL,
-			$datainfo["language"],
-			$datainfo["collector"],
-			$datainfo["reviewer"],
-			$datainfo["status"],
-			$datainfo["comments"]
+			FilterString($datainfo["language"]),
+			FilterString($datainfo["collector"]),
+			FilterString($datainfo["reviewer"]),
+			FilterString($datainfo["status"]),
+			FilterString($datainfo["comments"])
 		);
 		$stmt->execute();
 		$stmt->close();
@@ -18,13 +18,20 @@
 	}
 	
 	function update_datainfo_in_db($db, $datainfo) {
-		$query =	"UPDATE datainfo SET
-						language = '$datainfo[language]',
-						collector = '$datainfo[collector]',
-						reviewer = '$datainfo[reviewer]',
-						status = '$datainfo[status]',
-						comments = '$datainfo[comments]'
-					WHERE id = $datainfo[id]";
+		$query =	sprintf("UPDATE datainfo SET
+								language = '%s',
+								collector = '%s',
+								reviewer = '%s',
+								status = '%s',
+								comments = '%s'
+							WHERE id = %d",
+							FilterString($datainfo["language"]),
+							FilterString($datainfo["collector"]),
+							FilterString($datainfo["reviewer"]),
+							FilterString($datainfo["status"]),
+							FilterString($datainfo["comments"]),
+							$datainfo["id"]
+					);
 		$db->query($query);
 	}
 	

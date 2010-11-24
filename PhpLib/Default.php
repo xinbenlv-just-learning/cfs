@@ -12,7 +12,7 @@
 	$isGpc = get_magic_quotes_gpc();
 	
 	// check $str is set before GetString
-	function GetString($str) {
+	function FilterString($str) {
 		if (is_string($str)) {
 			global $isGpc;
 			if (!$isGpc)
@@ -31,8 +31,7 @@
 	}
 	
 	// check $select is set before GetSelection
-	function GetSelect($select) {
-		$select = GetString($select);
+	function FilterSelect($select) {
 		if ($select == SELECT_HINT)
 			$select = NULL;
 		

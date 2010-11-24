@@ -9,16 +9,17 @@
 		
 		$stmt->bind_param("isssss",
 			$null = NULL,
-			$contact["person"],
-			$contact["address"],
-			$contact["telephone"],
-			$contact["fax"],
-			$contact["email"]
+			FilterString($contact["person"]),
+			FilterString($contact["address"]),
+			FilterString($contact["telephone"]),
+			FilterString($contact["fax"]),
+			FilterString($contact["email"])
 		);
-		$stmt->execute();
+		$success = $stmt->execute();
 		$stmt->close();
 		
-		return $contact["id"] = $db->insert_id;
+		$contact["id"] = $db->insert_id;
+		return $success;
 	}
 	
 	function insert_organization_in_db($db, &$org) {
@@ -27,24 +28,25 @@
 		
 		$stmt->bind_param("isssssisssiiii",
 			$null = NULL,
-			$org["name"],
-			$org["websiteEn"],
-			$org["websiteCh"],
-			$org["type"],
-			$org["originalCountry"],
-			$org["granteeType"],
+			FilterString($org["name"]),
+			FilterString($org["websiteEn"]),
+			FilterString($org["websiteCh"]),
+			FilterString($org["type"]),
+			FilterString($org["originalCountry"]),
+			FilterString($org["granteeType"]),
 			$org["acceptPublic"],
-			$org["area"],
-			$org["subArea"],
+			FilterString($org["area"]),
+			FilterString($org["subArea"]),
 			$org["numOffices"],
 			$org["cnContact"]["id"],
 			$org["hqContact"]["id"],
 			$org["datainfo"]["id"]
 		);
-		$stmt->execute();
+		$success = $stmt->execute();
 		$stmt->close();
 		
-		return $org["id"] = $db->insert_id;
+		$org["id"] = $db->insert_id;
+		return $success;
 	}
 	
 	function insert_org_geos_in_db($db, $org_id, &$geos) {
@@ -55,12 +57,16 @@
 			$stmt->bind_param("iis",
 				$null = NULL,
 				$geos[$i]["org_id"] = $org_id,
-				$geos[$i]["geo"]
+				FilterString($geos[$i]["geo"])
 			);
-			$stmt->execute();
+			$success = $stmt->execute();
 			$geos["id"] = $db->insert_id;
+			
+			if (!$success)
+				return false;
 		}
 		$stmt->close();
+		return true;
 	}
 	
 	function insert_org_assets_in_db($db, $org_id, &$assets) {
@@ -74,10 +80,13 @@
 				$assets[$i]["year"],
 				$assets[$i]["amount"]
 			);
-			$stmt->execute();
+			$success = $stmt->execute();
 			$assets[$i]["id"] = $db->insert_id;
+			if (!$success)
+				return false;
 		}
 		$stmt->close();
+		return true;
 	}
 	
 	function insert_org_giving_in_db($db, $org_id, &$giving) {
@@ -92,10 +101,13 @@
 				$giving[$i]["world"],
 				$giving[$i]["china"]
 			);
-			$stmt->execute();
+			$success = $stmt->execute();
 			$giving[$i]["id"] = $db->insert_id;
+			if (!$success)
+				return false;
 		}
 		$stmt->close();
+		return true;
 	}
 	
 	function insert_org_in_db($db, &$org) {
@@ -108,125 +120,148 @@
 		// 5. Insert geos
 		// 6. Insert assets
 		// 7. Insert giving
-
-		// todo: use transaction here
-		insert_contact_in_db($db, $org["cnContact"]);
-		insert_contact_in_db($db, $org["hqContact"]);
-		insert_datainfo_in_db($db, $org["datainfo"]);
-		insert_organization_in_db($db, $org);
 		
-		insert_org_geos_in_db($db, $org["id"], $org["geos"]);
-		insert_org_assets_in_db($db, $org["id"], $org["assets"]);
-		insert_org_giving_in_db($db, $org["id"], $org["giving"]);
+		$insert_cnContact = insert_contact_in_db($db, $org["cnContact"]);
+		$insert_hqContact = insert_contact_in_db($db, $org["hqContact"]);
+		$insert_datainfo = insert_datainfo_in_db($db, $org["datainfo"]);
+		$insert_organization = insert_organization_in_db($db, $org);
 		
-		return true;
+		$insert_org_geos = insert_org_geos_in_db($db, $org["id"], $org["geos"]);
+		$insert_org_assets = insert_org_assets_in_db($db, $org["id"], $org["assets"]);
+		$insert_org_giving = insert_org_giving_in_db($db, $org["id"], $org["giving"]);
+		
+		return $insert_cnContact && $insert_hqContact && $insert_datainfo && $insert_organization &&
+				$insert_org_geos && $insert_org_assets && $insert_org_giving;
 	}
 	
 	function update_contact_in_db($db, $contact) {
-		$query =	"UPDATE contact SET
-						person_name = '$contact[person]',
-						address = '$contact[address]',
-						telephone = '$contact[telephone]',
-						fax = '$contact[fax]',
-						email = '$contact[email]'
-					WHERE id = $contact[id]";
-		$db->query($query);
+		$query =	sprintf("UPDATE contact SET
+								person_name = '%s',
+								address = '%s',
+								telephone = '%s',
+								fax = '%s',
+								email = '%s'
+							WHERE id = %d",
+							FilterString($contact["person"]),
+							FilterString($contact["address"]),
+							FilterString($contact["telephone"]),
+							FilterString($contact["fax"]),
+							FilterString($contact["email"]),
+							$contact["id"]
+					);
+		return $db->query($query);
 	}
 	
 	function update_organization_in_db($db, $org) {
-		$cnContactId = $org["cnContact"]["id"];
-		$hqContactId = $org["hqContact"]["id"];
-		$datainfoId = $org["datainfo"]["id"];
-		
-		$query =	"UPDATE organization SET
-						organization_name = '$org[name]',
-						english_website = '$org[websiteEn]',
-						chinese_website = '$org[websiteCh]',
-						organization_type = '$org[type]',
-						original_country = '$org[originalCountry]',
-						grantee_type = '$org[granteeType]',
-						accept_public = '$org[acceptPublic]',
-						area_funding = '$org[area]',
-						subarea_funding = '$org[subArea]',
-						num_offices_china = '$org[numOffices]',
-						china_contact_id = '$cnContactId',
-						hq_contact_id = '$hqContactId',
-						datainfo_id = '$datainfoId'
-					WHERE id = $org[id]";
-		$db->query($query);
+		$query =	sprintf("UPDATE organization SET
+								organization_name = '%s',
+								english_website = '%s',
+								chinese_website = '%s',
+								organization_type = '%s',
+								original_country = '%s',
+								grantee_type = '%s',
+								accept_public = '%d',
+								area_funding = '%s',
+								subarea_funding = '%s',
+								num_offices_china = '%d',
+								china_contact_id = '%d',
+								hq_contact_id = '%d',
+								datainfo_id = '%d'
+							WHERE id = %d",
+							FilterString($org["name"]),
+							FilterString($org["websiteEn"]),
+							FilterString($org["websiteCh"]),
+							FilterString($org["type"]),
+							FilterString($org["originalCountry"]),
+							FilterString($org["granteeType"]),
+							$org["acceptPublic"],
+							FilterString($org["area"]),
+							FilterString($org["subArea"]),
+							FilterString($org["numOffices"]),
+							$org["cnContact"]["id"],
+							$org["hqContact"]["id"],
+							$org["datainfo"]["id"],
+							$org["id"]
+					);
+		return $db->query($query);
 	}
 	
 	function update_org_geos_in_db($db, $org_id, &$geos) {
-		delete_org_geos_in_db($db, $org_id);
-		insert_org_geos_in_db($db, $org_id, $geos);
+		$delete_org_geos = delete_org_geos_in_db($db, $org_id);
+		$insert_org_geos = insert_org_geos_in_db($db, $org_id, $geos);
+		return $delete_org_geos && $insert_org_geos;
 	}
 	
 	function update_org_assets_in_db($db, $org_id, &$assets) {
-		delete_org_assets_in_db($db, $org_id);
-		insert_org_assets_in_db($db, $org_id, $assets);
+		$delete_org_assets = delete_org_assets_in_db($db, $org_id);
+		$insert_org_assets = insert_org_assets_in_db($db, $org_id, $assets);
+		return $delete_org_assets && $insert_org_assets;
 	}
 	
 	function update_org_giving_in_db($db, $org_id, &$giving) {
-		delete_org_giving_in_db($db, $org_id);
-		insert_org_giving_in_db($db, $org_id, $giving);
+		$delete_org_giving = delete_org_giving_in_db($db, $org_id);
+		$insert_org_giving = insert_org_giving_in_db($db, $org_id, $giving);
+		return $delete_org_giving && $insert_org_giving;
 	}
 	
 	function update_org_in_db($db, &$org) {
-		update_contact_in_db($db, $org["cnContact"]);
-		update_contact_in_db($db, $org["hqContact"]);
-		update_datainfo_in_db($db, $org["datainfo"]);
-		update_organization_in_db($db, $org);
+		$update_cnContact = update_contact_in_db($db, $org["cnContact"]);
+		$update_hqContact = update_contact_in_db($db, $org["hqContact"]);
+		$update_datainfo = update_datainfo_in_db($db, $org["datainfo"]);
+		$update_organization = update_organization_in_db($db, $org);
 		
-		update_org_geos_in_db($db, $org["id"], $org["geos"]);
-		update_org_assets_in_db($db, $org["id"], $org["assets"]);
-		update_org_giving_in_db($db, $org["id"], $org["giving"]);
+		$update_org_geos = update_org_geos_in_db($db, $org["id"], $org["geos"]);
+		$update_org_assets = update_org_assets_in_db($db, $org["id"], $org["assets"]);
+		$update_org_giving = update_org_giving_in_db($db, $org["id"], $org["giving"]);
 		
-		return true;
+		return $update_cnContact && $update_hqContact && $update_datainfo && $update_organization &&
+				$update_org_geos && $update_org_assets && $update_org_giving;
 	}
 	
 	function delete_contact_in_db($db, $contact) {
 		$query = "DELETE FROM contact WHERE id = $contact[id]";
-		$db->query($query);
+		return $db->query($query);
 	}
 	
 	function delete_organization_in_db($db, $org) {
 		$query = "DELETE FROM organization WHERE id = $org[id]";
-		$db->query($query);
+		return $db->query($query);
 	}
 	
 	function delete_org_geos_in_db($db, $org_id) {
 		$query = "DELETE FROM organization_geos WHERE organization_id = $org_id";
-		$db->query($query);
+		return $db->query($query);
 	}
 	
 	function delete_org_assets_in_db($db, $org_id) {
 		$query = "DELETE FROM organization_assets WHERE organization_id = $org_id";
-		$db->query($query);
+		return $db->query($query);
 	}
 	
 	function delete_org_giving_in_db($db, $org_id) {
 		$query = "DELETE FROM organization_giving WHERE organization_id = $org_id";
-		$db->query($query);
+		return $db->query($query);
 	}
 	
 	function delete_grants_in_db($db, $org_id) {
 		$query = "DELETE FROM `grant` WHERE organization_id = $org_id";
-		$db->query($query);
+		return $db->query($query);
 	}
 	
 	function delete_org_in_db($db, $org) {
-		delete_contact_in_db($db, $org["cnContact"]);
-		delete_contact_in_db($db, $org["hqContact"]);
-		delete_datainfo_in_db($db, $org["datainfo"]);
-		delete_organization_in_db($db, $org);
+		$delete_cnContact = delete_contact_in_db($db, $org["cnContact"]);
+		$delete_hqContact = delete_contact_in_db($db, $org["hqContact"]);
+		$delete_datainfo = delete_datainfo_in_db($db, $org["datainfo"]);
+		$delete_organization = delete_organization_in_db($db, $org);
 		
-		delete_org_geos_in_db($db, $org["id"]);
-		delete_org_assets_in_db($db, $org["id"]);
-		delete_org_giving_in_db($db, $org["id"]);
+		$delete_org_geos = delete_org_geos_in_db($db, $org["id"]);
+		$delete_org_assets = delete_org_assets_in_db($db, $org["id"]);
+		$delete_org_giving = delete_org_giving_in_db($db, $org["id"]);
 		
-		delete_grants_in_db($db, $org["id"]);
+		$delete_grants = delete_grants_in_db($db, $org["id"]);
 		
-		return true;
+		return $delete_cnContact && $update_hqContact && $delete_datainfo && $delete_organization &&
+				$delete_org_geos && $delete_org_assets && $delete_org_giving && $delete_grants;
 	}
 	
 	function process_organization(&$org, $action) {
@@ -234,14 +269,17 @@
 			output($org);
 		
 		$db = connect_db();
+		$db->autocommit(false);
 		switch ($action) {
 			case "add":
 			default:
 				echo "<a href='./OrganizationForm.php?action=add'> Add another New Organization </a>";
 				if (insert_org_in_db($db, $org)) {
+					$db->commit();
 					echo "<p> Succeeded to Insert the Organization into Database. </p>";
 					output($org);
 				} else {
+					$db->rollback();
 					echo "<p> Failed to Insert the Organization into Database! </p>";
 				}
 				break;
@@ -249,9 +287,11 @@
 			case "update":
 				echo "<a href='./ListOrganization.php'> Back to List Organization </a>";
 				if (update_org_in_db($db, $org)) {
+					$db->commit();
 					echo "<p> Succeeded to Update the Organization in Database. </p>";
 					output($org);
 				} else {
+					$db->rollback();
 					echo "<p> Failed to Update the Organization in Database! </p>";
 				}
 				break;
@@ -260,13 +300,16 @@
 				echo "<a href='./ListOrganization.php'> Back to List Organization </a>";
 				$org = get_org_from_db($db, $org["id"]);
 				if (isset($org["id"]) && delete_org_in_db($db, $org)) {
+					$db->commit();
 					echo "<p> Succeeded to Delete the Organization in Database. </p>";
 					output($org);
 				} else {
+					$db->rollback();
 					echo "<p> Failed to Delete the Organization in Database! </p>";
 				}
 				break;
 		}
+		$db->autocommit(true);
 		$db->close();
 	}
 ?>

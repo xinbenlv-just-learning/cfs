@@ -396,6 +396,9 @@ HIDDEN;
 		display_table_footer();
 		display_form_footer();
 		
+		if ($action == "update")
+			echo "<a href='./GrantForm.php?action=add&org_id=$org[id]'> Add a Grant </a>";
+		
 		save_json_to_html($org_json->SubAreaList, "JsonSubAreaList");
 	}
 ?>

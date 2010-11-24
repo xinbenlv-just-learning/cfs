@@ -1,5 +1,6 @@
 <?php
 	require_once("../PhpLib/Default.php");
+	require_once("../PhpLib/Organization_server_fns.php");
 	require_once("../PhpLib/Grant_server_fns.php");
 	require_once("../PhpLib/DataInfo_fns.php");
 	
@@ -37,7 +38,7 @@ ORG_NAME;
 echo <<< GRANT_NAME
 		<tr>
 			<td> Grant Program </td>
-			<td>
+			<td class="required">
 				<input name="GrantProgram" value="$program" />
 			</td>
 			<td> Required </td>
@@ -138,7 +139,7 @@ TABLE_FOOTER;
 	
 	function display_form_footer() {
 echo <<< FORM_FOOTER
-		<input type="submit" name="submit" value="Submit" />
+		<input type="submit" name="submit" id="submit" value="Submit" />
 		<input type="reset" name="reset" id="reset" value="Reset" />
 	</form>
 FORM_FOOTER;
@@ -161,20 +162,20 @@ HIDDEN;
 			case "add":
 			default:
 					if ($org_id == NULL)
-						throw Exception("Please Specify an Organization!");
+						throw new Exception("Please Specify an Organization!");
 					
-					$grant = array("org_id" => $org_id);
+					$grant = array("org_id" => $org_id, "org_name" => get_org_name_from_db_new_connect($org_id));
 					$actionPhp .= "?action=add";
 					break;
 					
 			case "update":
 					if ($id == NULL)
-						throw Exception("Please Specify a Grant!");
+						throw new Exception("Please Specify a Grant!");
 					
 					$grant = get_grant_from_db_new_connect($id);
 					
 					if (!isset($grant["id"]))
-						throw Exception("Can not Find the Specified Grant!");
+						throw new Exception("Can not Find the Specified Grant!");
 					
 					$actionPhp .= "?action=update&id=$id";
 					break;

@@ -17,5 +17,5 @@
 		echo $ex->getMessage();
 	}
 	
-	display_html_footer(array("jquery-1.4.3.min.js", "Default.js", "GrantForm.js", "DataInfo.js"));
+	display_html_footer(array("jquery-1.4.3.min.js", "Default.js", "GrantForm.js"));
 ?>
