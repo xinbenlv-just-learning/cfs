@@ -1,7 +1,7 @@
 <?php
 	require_once("../PhpLib/Default.php");
 	require_once("../PhpLib/Grant_server_fns.php");
-	require_once("../PhpLib/ProcessDatainfo_fns.php");
+	require_once("../PhpLib/ProcessDataInfo_fns.php");
 	
 	function insert_recipients_in_db($db, &$recipients) {
 		$query = sprintf("INSERT INTO grant_recipients VALUES (%d, '%s', %d, %d)",
