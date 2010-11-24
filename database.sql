@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 24, 2010 at 05:03 AM
+-- Generation Time: Nov 24, 2010 at 05:07 AM
 -- Server version: 5.1.36
 -- PHP Version: 5.3.0
 
@@ -12,6 +12,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Database: `chinafundseeker`
 --
+CREATE DATABASE `chinafundseeker` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `chinafundseeker`;
 
 -- --------------------------------------------------------
 
