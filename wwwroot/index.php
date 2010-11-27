@@ -2,7 +2,7 @@
 	require_once("../PhpLib/Default.php");
 	require_once("../PhpLib/index_fns.php");
 	
-	ValidateUser();
+	ValidateUser(false);
 	
 	display_html_header("Main Page", array("Default.css", "Index.css"));
 	echo "<body>";

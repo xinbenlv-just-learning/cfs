@@ -193,10 +193,13 @@ echo <<< REDIRECT
 REDIRECT;
 	}
 	
-	function ValidateUser() {
+	function ValidateUser($isShowError = true) {
 		StartSession();
 		if (!isset($_SESSION[VALID_USER])) {
-			RedirectHtml("Invalid User", "Login First!", "Login.php");
+			if ($isShowError)
+				RedirectHtml("Invalid User", "Login First!", "Login.php");
+			else
+				RedirectHtml(NULL, NULL, "Login.php", 0);
 			exit();
 		}
 	}
