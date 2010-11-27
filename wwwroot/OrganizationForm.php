@@ -2,6 +2,8 @@
 	require_once("../PhpLib/Default.php");
 	require_once("../PhpLib/OrganizationForm_fns.php");
 	
+	ValidateUser();
+	
 	display_html_header("Input Organization Data",
 		array("Default.css", "OrganizationForm.css")
 	);
@@ -10,7 +12,11 @@
 		$action = isset($_GET["action"]) ? $_GET["action"] : "add";
 		$id = isset($_GET["id"]) ? $_GET["id"] : NULL;
 		
-		display_org_form("ProcessOrganization.php", $action, $id);
+		echo "<body>";
+			display_user();
+			display_index_link();
+			display_org_form("ProcessOrganization.php", $action, $id);
+		echo "</body>";
 	}
 	catch (Exception $ex) {
 		echo $ex->getMessage();

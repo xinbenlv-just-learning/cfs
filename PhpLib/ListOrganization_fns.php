@@ -31,7 +31,7 @@ echo <<< TABLE_BODY
 					<td>
 						<a href="./OrganizationForm.php?action=update&id=$org[id]"> Edit </a>
 						<a href="./ListGrant.php?org_id=$org[id]"> Grants </a>
-						<a href="./ProcessOrganization.php?action=delete&id=$org[id]"> Delete </a>
+						<a class="actionDelete" href="./ProcessOrganization.php?action=delete&id=$org[id]"> Delete </a>
 					</td>
 					<td> $org[id] </td>
 					<td> $org[name] </td>

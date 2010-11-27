@@ -32,11 +32,11 @@
 							FilterString($datainfo["comments"]),
 							$datainfo["id"]
 					);
-		$db->query($query);
+		return $db->query($query);
 	}
 	
 	function delete_datainfo_in_db($db, $datainfo) {
 		$query = "DELETE FROM datainfo WHERE id = $datainfo[id]";
-		$db->query($query);
+		return $db->query($query);
 	}
 ?>

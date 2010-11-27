@@ -11,6 +11,11 @@ body {
 	width: 1100px;
 }
 
+#UserBar p,
+#UserBar a {
+	display: inline;
+}
+
 
 /* for mutilple choice */
 div.Multiple {

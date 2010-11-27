@@ -9,6 +9,8 @@
 	
 	define("SELECT_HINT", "[ Select One ]");
 	
+	define("VALID_USER", "valid_user");
+	
 	$isGpc = get_magic_quotes_gpc();
 	
 	// check $str is set before GetString
@@ -63,11 +65,25 @@ echo <<< HEADER
 			<title> $title </title>
 			$cssHtml
 		</head>
-
-		<body>
-			<a href="./index.html"> Return to Main Page </a>
-			<br />
 HEADER;
+	}
+	
+	function display_user() {
+		StartSession();
+		$username = isset($_SESSION[VALID_USER]) ? $_SESSION[VALID_USER] : "Guest";
+echo <<< USER
+		<div id="UserBar"> 
+			<p> Hi, $username! </p>
+			<a href="./ProcessLogin.php?action=logout"> Logout </a>
+		</div>
+USER;
+	}
+	
+	function display_index_link() {
+echo <<< INDEX_LINK
+		<a href="./index.php"> Return to Main Page </a>
+		<br>
+INDEX_LINK;
 	}
 	
 	function display_html_footer($jsFiles = NULL) {
@@ -79,7 +95,6 @@ HEADER;
 		}
 		
 echo <<< FOOTER
-		</body>
 		$jsHtml
 	</html>
 FOOTER;
@@ -153,5 +168,41 @@ FOOTER;
 				return false;
 		
 		return true;
+	}
+	
+	// for user account management
+	function RedirectHtml($displayMessage, $errorMessage = "Login First!", $target = "Login.php", $timeout = 3) {
+		if ($errorMessage != NULL)
+			$url = "./$target?error=$errorMessage";
+		else
+			$url = "./$target";
+		
+echo <<< REDIRECT
+		<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+		<html xmlns="http://www.w3.org/1999/xhtml">
+			<head>
+				<meta http-equiv="Refresh" content="$timeout; url=$url" />
+				<title> Jump to $target </title>
+			</head>
+			<body>
+				$displayMessage
+				<br>
+				Jump to $target automatically in $timeout seconds
+			</body>
+		</html>
+REDIRECT;
+	}
+	
+	function ValidateUser() {
+		StartSession();
+		if (!isset($_SESSION[VALID_USER])) {
+			RedirectHtml("Invalid User", "Login First!", "Login.php");
+			exit();
+		}
+	}
+	
+	function StartSession() {
+		if (!session_id())
+			session_start();
 	}
 ?>

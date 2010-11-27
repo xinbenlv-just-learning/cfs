@@ -2,16 +2,22 @@
 	require_once("../PhpLib/Default.php");
 	require_once("../PhpLib/ListOrganization_fns.php");
 	
+	ValidateUser();
+	
 	display_html_header("Organization List",
 		array("Default.css", "ListOrganization.css")
 	);
 	
 	try {
-		display_org_list_table();
+		echo "<body>";
+			display_user();
+			display_index_link();
+			display_org_list_table();
+		echo "</body>";
 	}
 	catch (Exception $ex) {
 		echo $ex->getMessage();
 	}
 	
-	display_html_footer();
+	display_html_footer(array("jquery-1.4.3.min.js", "ListOrganization.js"));
 ?>

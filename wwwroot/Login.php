@@ -1,29 +1,22 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title> Login </title>
-		<link rel="stylesheet" type="text/css" href="./Css/Default.css" />
-	</head>
-
-	<body>
-		<form id="login" action="./Php/ProcessLogin.php" method="post">
-			<table>
-				<tbody>
-					<tr>
-						<td> Name: </td>
-						<td> <input /> </td>
-					</tr>
-					
-					<tr>
-						<td> Password: </td>
-						<td> <input /> </td>
-					</tr>
-				</tbody>
-			</table>
+<?php
+	require_once("../PhpLib/Default.php");
+	require_once("../PhpLib/Login_fns.php");
+	
+	display_html_header("Login", array("Default.css", "Login.css"));
+	
+	try {
+		StartSession();
+		echo "<body>";
+			echo "<img id='head' src='./Image/CFS_Logo.jpg' />";
+			display_login_form("ProcessLogin.php");
 			
-			<input type="submit" id="submit" value="Submit" />
-			<input type="reset" id="reset" value="Reset" />
-		</form>
-	</body>
-</html>
+			$login_error_html = isset($_GET["error"]) ? "<p> ".$_GET["error"]." </p>" : NULL;
+			echo $login_error_html;
+		echo "</body>";
+	}
+	catch (Exception $ex) {
+		echo $ex->getMessage();
+	}
+	
+	display_html_footer(array("jquery-1.4.3.min.js", "Default.js", "Login.js"));
+?>

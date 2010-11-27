@@ -29,7 +29,7 @@ echo <<< TABLE_BODY
 			<tr>
 				<td>
 					<a href="./GrantForm.php?action=update&id=$grant[id]" > Edit </a>
-					<a href="./ProcessGrant.php?action=delete&id=$grant[id]" > Delete </a>
+					<a class="actionDelete" href="./ProcessGrant.php?action=delete&id=$grant[id]" > Delete </a>
 				</td>
 				<td> $grant[org_name] </td>
 				<td> $grant[program] </td>

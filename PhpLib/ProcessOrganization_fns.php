@@ -260,7 +260,7 @@
 		
 		$delete_grants = delete_grants_in_db($db, $org["id"]);
 		
-		return $delete_cnContact && $update_hqContact && $delete_datainfo && $delete_organization &&
+		return $delete_cnContact && $delete_hqContact && $delete_datainfo && $delete_organization &&
 				$delete_org_geos && $delete_org_assets && $delete_org_giving && $delete_grants;
 	}
 	

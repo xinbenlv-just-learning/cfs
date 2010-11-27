@@ -2,6 +2,8 @@
 	require_once("../PhpLib/Default.php");
 	require_once("../PhpLib/GrantForm_fns.php");
 	
+	ValidateUser();
+	
 	display_html_header("Input Grant Data",
 		array("Default.css", "GrantForm.css")
 	);
@@ -11,7 +13,11 @@
 		$id = isset($_GET["id"]) ? $_GET["id"] : NULL;
 		$org_id = isset($_GET["org_id"]) ? $_GET["org_id"] : NULL;
 		
-		display_grant_form("ProcessGrant.php", $action, $id, $org_id);
+		echo "<body>";
+			display_user();
+			display_index_link();
+			display_grant_form("ProcessGrant.php", $action, $id, $org_id);
+		echo "</body>";
 	}
 	catch (Exception $ex) {
 		echo $ex->getMessage();
