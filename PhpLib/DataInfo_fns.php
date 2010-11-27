@@ -10,6 +10,7 @@ echo <<< LANGUAGE
 			<td class="first LanguageList">
 				$language_list_html
 			</td>
+			<td> </td>
 		</tr>
 LANGUAGE;
 	}
@@ -37,6 +38,7 @@ echo <<< REVIEWER
 			<td class="first NameList Reviewer">
 				$reviewer_list_html
 			</td>
+			<td> </td>
 		</tr>
 REVIEWER;
 	}
@@ -62,6 +64,7 @@ echo <<< DATAINFO
 			<td class="first">
 				<textarea name="Comments" rows="5">$comments</textarea>
 			</td>
+			<td> </td>
 		</tr>
 DATAINFO;
 	}

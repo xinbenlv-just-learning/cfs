@@ -41,6 +41,7 @@ echo <<< WEBSITEEN
 			<td class="first">
 				<input name="WebsiteEn" value="$websiteEn" />
 			</td>
+			<td> </td>
 		</tr>
 WEBSITEEN;
 	}
@@ -52,6 +53,7 @@ echo <<< WEBSITECH
 			<td class="first">
 				<input name="WebsiteCh" value="$websiteCh" />
 			</td>
+			<td> </td>
 		</tr>
 WEBSITECH;
 	}
@@ -83,6 +85,7 @@ echo <<< GEOS
 			<td class="first GeoList">
 				$geo_list_html
 			</td>
+			<td> </td>
 		</tr>
 GEOS;
 	}
@@ -94,6 +97,7 @@ echo <<< ORIGINAL
 			<td class="first">
 				<input name="OriginalCountry" value="$originalCountry" />
 			</td>
+			<td> </td>
 		</tr>
 ORIGINAL;
 	}
@@ -107,6 +111,7 @@ echo <<< GRANTEE
 			<td class="first GranteeTypeList">
 				$grantee_type_list_html
 			</td>
+			<td> </td>
 		</tr>
 GRANTEE;
 	}
@@ -120,6 +125,7 @@ echo <<< ACCEPT
 			<td class="first">
 				<input type="checkbox" name="AcceptPublic" $accept_public_html />
 			</td>
+			<td> </td>
 		</tr>
 ACCEPT;
 	}
@@ -147,6 +153,7 @@ echo <<< SUBAREA
 			<td class="first SubAreaList">
 				$subarea_list_html
 			</td>
+			<td> </td>
 		</tr>
 SUBAREA;
 	}
@@ -193,6 +200,7 @@ echo <<< ASSETS
 					</tbody>
 				</table>
 			</td>
+			<td> </td>
 		</tr>
 ASSETS;
 	}
@@ -245,6 +253,7 @@ echo <<< GIVING
 					</tbody>
 				</table>
 			</td>
+			<td> </td>
 		</tr>
 GIVING;
 	}
@@ -256,6 +265,7 @@ echo <<< OFFICES
 			<td class="first">
 				<input name="NumOffices" value="$numOffices" />
 			</td>
+			<td> </td>
 		</tr>
 OFFICES;
 	}
@@ -277,6 +287,7 @@ echo <<< CONTACT
 			<td class="first">
 				<input name="$person" value="$contact[name]" />
 			</td>
+			<td> </td>
 		</tr>
 		
 		<tr>
@@ -284,6 +295,7 @@ echo <<< CONTACT
 			<td class="first">
 				<input name="$address" value="$contact[address]" />
 			</td>
+			<td> </td>
 		<tr>
 		
 		<tr>
@@ -291,6 +303,7 @@ echo <<< CONTACT
 			<td class="first">
 				<input name="$telephone" value="$contact[telephone]" />
 			</td>
+			<td> </td>
 		<tr>
 		
 		<tr>
@@ -298,6 +311,7 @@ echo <<< CONTACT
 			<td class="first">
 				<input name="$fax" value="$contact[fax]" />
 			</td>
+			<td> </td>
 		<tr>
 		
 		<tr>
@@ -305,6 +319,7 @@ echo <<< CONTACT
 			<td class="first">
 				<input name="$email" value="$contact[email]" />
 			</td>
+			<td> </td>
 		<tr>
 CONTACT;
 	}

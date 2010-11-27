@@ -30,6 +30,7 @@ echo <<< ORG_NAME
 			<td>
 				<a href="./OrganizationForm.php?action=update&id=$org_id"> $org_name </a>
 			</td>
+			<td> </td>
 		</tr>
 ORG_NAME;
 	}
@@ -55,6 +56,7 @@ echo <<< FREQUENCY
 			<td class="FrequencyList">
 				$frequeny_list_html
 			</td>
+			<td> </td>
 		</tr>
 FREQUENCY;
 	}
@@ -66,6 +68,7 @@ echo <<< APP_GUIDE
 			<td>
 				<input name="AppGuide" value="$app_guide" />
 			</td>
+			<td> </td>
 		</tr>
 APP_GUIDE;
 	}
@@ -77,6 +80,7 @@ echo <<< APP_DEADLINE
 			<td>
 				<input name="AppDeadline" value="$app_deadline" />
 			</td>
+			<td> </td>
 		</tr>
 APP_DEADLINE;
 	}
@@ -91,18 +95,21 @@ echo <<< RECIPIENTS
 			<td>
 				<input name="RecipientsName" value="$recipients[name]" />
 			</td>
+			<td> </td>
 		</tr>
 		<tr>
 			<td> Year </td>
 			<td>
 				<input name="RecipientsYear" value="$recipients[year]" />
 			</td>
+			<td> </td>
 		</tr>
 		<tr>
 			<td> Total Giving </td>
 			<td>
 				<input name="RecipientsGiving" value="$recipients[giving]" />
 			</td>
+			<td> </td>
 		</tr>
 RECIPIENTS;
 	}
@@ -114,6 +121,7 @@ echo <<< SAMPLE_PROPOSALS
 			<td>
 				<input name="Sample" />
 			</td>
+			<td> </td>
 		</tr>
 SAMPLE_PROPOSALS;
 	}

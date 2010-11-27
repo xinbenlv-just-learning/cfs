@@ -1,6 +1,8 @@
 <?php
 	require_once("../PhpLib/Default.php");
 	require_once("../PhpLib/Organization_server_fns.php");
+	require_once("../PhpLib/Grant_server_fns.php");
+	require_once("../PhpLib/ProcessGrant_fns.php");
 	require_once("../PhpLib/ProcessDataInfo_fns.php");
 	
 	function insert_contact_in_db($db, &$contact) {
@@ -244,8 +246,13 @@
 	}
 	
 	function delete_grants_in_db($db, $org_id) {
-		$query = "DELETE FROM `grant` WHERE organization_id = $org_id";
-		return $db->query($query);
+		$delete_grants = true;
+		$grants = get_grants_from_db($org_id);
+		if (($count = count($grants)) > 0) {
+			for ($i = 0; $i < $count; $i++)
+				$delete_grants &= delete_grant_in_db($db, $grants[$i]);
+		}
+		return $delete_grants;
 	}
 	
 	function delete_org_in_db($db, $org) {
