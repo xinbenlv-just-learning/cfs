@@ -277,9 +277,11 @@ OFFICES;
 		$fax = $type."ContactFax";
 		$email = $type."ContactEmail";
 		
+		$name = ($type == "cn") ? "China Office(s)" : "Head Quarter";
+		
 echo <<< CONTACT
 		<tr>
-			<td class="first" colspan="3"> China Office(s) Contact Info </td>
+			<td class="first" colspan="3"> $name Contact Info </td>
 		</tr>
 		
 		<tr>
