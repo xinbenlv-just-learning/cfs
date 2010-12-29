@@ -1,6 +1,6 @@
 <?php
-	require_once("../PhpLib/Default.php");
-	require_once("../PhpLib/Login_fns.php");
+	require_once("../phpLib/Default.php");
+	require_once("../phpLib/Login_fns.php");
 	
 	display_html_header("Login", array("Default.css", "Login.css"));
 	

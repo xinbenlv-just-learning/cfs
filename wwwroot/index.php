@@ -1,6 +1,6 @@
 <?php
-	require_once("../PhpLib/Default.php");
-	require_once("../PhpLib/index_fns.php");
+	require_once("../phpLib/Default.php");
+	require_once("../phpLib/index_fns.php");
 	
 	ValidateUser(false);
 	

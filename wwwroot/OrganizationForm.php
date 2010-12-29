@@ -1,6 +1,6 @@
 <?php
-	require_once("../PhpLib/Default.php");
-	require_once("../PhpLib/OrganizationForm_fns.php");
+	require_once("../phpLib/Default.php");
+	require_once("../phpLib/OrganizationForm_fns.php");
 	
 	ValidateUser();
 	

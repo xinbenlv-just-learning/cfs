@@ -1,6 +1,6 @@
 <?php
-	require_once("../PhpLib/Default.php");
-	require_once("../PhpLib/ProcessLogin_fns.php");
+	require_once("../phpLib/Default.php");
+	require_once("../phpLib/ProcessLogin_fns.php");
 	
 	try {
 		$action = isset($_GET["action"]) ? $_GET["action"] : "login";

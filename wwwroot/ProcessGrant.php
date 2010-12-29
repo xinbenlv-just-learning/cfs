@@ -1,7 +1,7 @@
 <?php
-	require_once("../PhpLib/Default.php");
-	require_once("../PhpLib/Grant_client_fns.php");
-	require_once("../PhpLib/ProcessGrant_fns.php");
+	require_once("../phpLib/Default.php");
+	require_once("../phpLib/Grant_client_fns.php");
+	require_once("../phpLib/ProcessGrant_fns.php");
 	
 	ValidateUser();
 	
