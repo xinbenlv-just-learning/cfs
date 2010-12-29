@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 27, 2010 at 08:12 PM
+-- Generation Time: Dec 29, 2010 at 02:26 PM
 -- Server version: 5.1.36
 -- PHP Version: 5.3.0
 
@@ -31,6 +31,4 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `role`) VALUES
-('admin', 'c58326bef6a67cc55591588c787f7d3f6e3b3e8e', 'admin'),
-('jian', '687ce183618271c8916e49013951e6c4573c3ee2', 'admin'),
-('jianma', '687ce183618271c8916e49013951e6c4573c3ee2', NULL);
+('admin', 'c58326bef6a67cc55591588c787f7d3f6e3b3e8e', 'admin');
