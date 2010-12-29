@@ -7,7 +7,7 @@ echo <<< TABLE_HEADER
 			<caption> All Orgranizations </caption>
 			<thead>
 				<tr>
-					<th> Manipulation </th>
+					<th colspan="3"> Manipulation </th>
 					<th> Organization Id </th>
 					<th> Organization Name </th>
 					<th> Organization Type </th>
@@ -28,11 +28,9 @@ TABLE_HEADER;
 			
 echo <<< TABLE_BODY
 				<tr>
-					<td>
-						<a href="./OrganizationForm.php?action=update&id=$org[id]"> Edit </a>
-						<a href="./ListGrant.php?org_id=$org[id]"> Grants </a>
-						<a class="actionDelete" href="./ProcessOrganization.php?action=delete&id=$org[id]"> Delete </a>
-					</td>
+					<td> <a href="./OrganizationForm.php?action=update&id=$org[id]"> Edit </a> </td>
+					<td> <a href="./ListGrant.php?org_id=$org[id]"> Grants </a> </td>
+					<td> <a class="actionDelete" href="./ProcessOrganization.php?action=delete&id=$org[id]"> Delete </a> </td>
 					<td> $org[id] </td>
 					<td> $org[name] </td>
 					<td> $org[type] </td>

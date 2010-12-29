@@ -144,13 +144,17 @@ echo <<< AREA
 AREA;
 	}
 	
-	function display_subarea_funding($subarea, $subarea_list) {
-		$subarea_list_html = create_select_option($subarea, $subarea_list, "SubArea");
+	function display_subarea_funding($subareas, $subarea_list) {
+		$subarea_array = array();
+		for ($i = 0, $count = count($subareas); $i < $count; $i++) {
+			$subarea_array[$i] = $subareas[$i]["subarea"];
+		}
+		$subarea_list_html = create_multiple_select_option($subarea_array, $subarea_list, "Subareas");
 		
 echo <<< SUBAREA
 		<tr>
 			<td class="first"> Sub-Area of Funding </td>
-			<td class="first SubAreaList">
+			<td class="first SubareaList">
 				$subarea_list_html
 			</td>
 			<td> </td>
@@ -332,13 +336,13 @@ CONTACT;
 			display_websiteEn(isset($org["websiteEn"]) ? $org["websiteEn"] : NULL);
 			display_websiteCh(isset($org["websiteCh"]) ? $org["websiteCh"] : NULL);
 			display_org_type(isset($org["type"]) ? $org["type"] : NULL, $org_json->OrgTypeList);
-			display_geos(isset($org["geos"]) ? $org["geos"] : NULL, $org_json->GeoList);
+			display_geos(isset($org["geos"]) ? $org["geos"] : array(), $org_json->GeoList);
 			display_original_country(isset($org["originalCountry"]) ? $org["originalCountry"] : NULL);
 			display_grantee_type(isset($org["granteeType"]) ? $org["granteeType"] : NULL, $org_json->GranteeTypeList);
 			display_accept_public(isset($org["acceptPublic"]) ? $org["acceptPublic"] : true);
 			display_area_funding(isset($org["area"]) ? $org["area"] : NULL, $org_json->AreaList);
-			display_subarea_funding(isset($org["subArea"]) ? $org["subArea"] : NULL,
-									isset($org["area"]) ? $org_json->SubAreaList->$org["area"] : NULL);
+			display_subarea_funding(isset($org["subareas"]) ? $org["subareas"] : array(),
+									isset($org["area"]) ? $org_json->SubareaList->$org["area"] : array());
 			display_total_assets(isset($org["assets"]) ? $org["assets"] : NULL);
 			display_total_giving(isset($org["giving"]) ? $org["giving"] : NULL);
 			display_num_offices(isset($org["numOffices"]) ? $org["numOffices"] : NULL);
@@ -416,6 +420,6 @@ HIDDEN;
 		if ($action == "update")
 			echo "<a href='./GrantForm.php?action=add&org_id=$org[id]'> Add a Grant </a>";
 		
-		save_json_to_html($org_json->SubAreaList, "JsonSubAreaList");
+		save_json_to_html($org_json->SubareaList, "JsonSubareaList");
 	}
 ?>

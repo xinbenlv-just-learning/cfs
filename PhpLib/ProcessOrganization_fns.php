@@ -25,10 +25,10 @@
 	}
 	
 	function insert_organization_in_db($db, &$org) {
-		$query = "INSERT INTO organization VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		$query = "INSERT INTO organization VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		$stmt = $db->prepare($query);
 		
-		$stmt->bind_param("isssssisssiiii",
+		$stmt->bind_param("isssssissiiii",
 			$null = NULL,
 			FilterString($org["name"]),
 			FilterString($org["websiteEn"]),
@@ -38,7 +38,6 @@
 			FilterString($org["granteeType"]),
 			$org["acceptPublic"],
 			FilterString($org["area"]),
-			FilterString($org["subArea"]),
 			$org["numOffices"],
 			$org["cnContact"]["id"],
 			$org["hqContact"]["id"],
@@ -62,7 +61,27 @@
 				FilterString($geos[$i]["geo"])
 			);
 			$success = $stmt->execute();
-			$geos["id"] = $db->insert_id;
+			$geos[$i]["id"] = $db->insert_id;
+			
+			if (!$success)
+				return false;
+		}
+		$stmt->close();
+		return true;
+	}
+	
+	function insert_org_subareas_in_db($db, $org_id, &$subareas) {
+		$query = "INSERT INTO organization_subareas VALUES (?, ?, ?)";
+		$stmt = $db->prepare($query);
+		
+		for ($i = 0, $len = count($subareas); $i < $len; $i++) {
+			$stmt->bind_param("iis",
+				$null = NULL,
+				$subareas[$i]["org_id"] = $org_id,
+				FilterString($subareas[$i]["subarea"])
+			);
+			$success = $stmt->execute();
+			$subareas[$i]["id"] = $db->insert_id;
 			
 			if (!$success)
 				return false;
@@ -120,8 +139,9 @@
 		// 3. Insert datainfo
 		// 4. Insert organization
 		// 5. Insert geos
-		// 6. Insert assets
-		// 7. Insert giving
+		// 6. Insert subareas
+		// 7. Insert assets
+		// 8. Insert giving
 		
 		$insert_cnContact = insert_contact_in_db($db, $org["cnContact"]);
 		$insert_hqContact = insert_contact_in_db($db, $org["hqContact"]);
@@ -129,11 +149,12 @@
 		$insert_organization = insert_organization_in_db($db, $org);
 		
 		$insert_org_geos = insert_org_geos_in_db($db, $org["id"], $org["geos"]);
+		$insert_org_subareas = insert_org_subareas_in_db($db, $org["id"], $org["subareas"]);
 		$insert_org_assets = insert_org_assets_in_db($db, $org["id"], $org["assets"]);
 		$insert_org_giving = insert_org_giving_in_db($db, $org["id"], $org["giving"]);
 		
 		return $insert_cnContact && $insert_hqContact && $insert_datainfo && $insert_organization &&
-				$insert_org_geos && $insert_org_assets && $insert_org_giving;
+				$insert_org_geos && $insert_org_subareas && $insert_org_assets && $insert_org_giving;
 	}
 	
 	function update_contact_in_db($db, $contact) {
@@ -164,7 +185,6 @@
 								grantee_type = '%s',
 								accept_public = '%d',
 								area_funding = '%s',
-								subarea_funding = '%s',
 								num_offices_china = '%d',
 								china_contact_id = '%d',
 								hq_contact_id = '%d',
@@ -178,7 +198,6 @@
 							FilterString($org["granteeType"]),
 							$org["acceptPublic"],
 							FilterString($org["area"]),
-							FilterString($org["subArea"]),
 							FilterString($org["numOffices"]),
 							$org["cnContact"]["id"],
 							$org["hqContact"]["id"],
@@ -192,6 +211,12 @@
 		$delete_org_geos = delete_org_geos_in_db($db, $org_id);
 		$insert_org_geos = insert_org_geos_in_db($db, $org_id, $geos);
 		return $delete_org_geos && $insert_org_geos;
+	}
+	
+	function update_org_subareas_in_db($db, $org_id, &$subareas) {
+		$delete_org_subareas = delete_org_subareas_in_db($db, $org_id);
+		$insert_org_subareas = insert_org_subareas_in_db($db, $org_id, $subareas);
+		return $delete_org_subareas && $insert_org_subareas;
 	}
 	
 	function update_org_assets_in_db($db, $org_id, &$assets) {
@@ -213,11 +238,12 @@
 		$update_organization = update_organization_in_db($db, $org);
 		
 		$update_org_geos = update_org_geos_in_db($db, $org["id"], $org["geos"]);
+		$update_org_subareas = update_org_subareas_in_db($db, $org["id"], $org["subareas"]);
 		$update_org_assets = update_org_assets_in_db($db, $org["id"], $org["assets"]);
 		$update_org_giving = update_org_giving_in_db($db, $org["id"], $org["giving"]);
 		
 		return $update_cnContact && $update_hqContact && $update_datainfo && $update_organization &&
-				$update_org_geos && $update_org_assets && $update_org_giving;
+				$update_org_geos && $update_org_subareas && $update_org_assets && $update_org_giving;
 	}
 	
 	function delete_contact_in_db($db, $contact) {
@@ -232,6 +258,11 @@
 	
 	function delete_org_geos_in_db($db, $org_id) {
 		$query = "DELETE FROM organization_geos WHERE organization_id = $org_id";
+		return $db->query($query);
+	}
+	
+	function delete_org_subareas_in_db($db, $org_id) {
+		$query = "DELETE FROM organization_subareas WHERE organization_id = $org_id";
 		return $db->query($query);
 	}
 	
@@ -262,13 +293,14 @@
 		$delete_organization = delete_organization_in_db($db, $org);
 		
 		$delete_org_geos = delete_org_geos_in_db($db, $org["id"]);
+		$delete_org_subareas = delete_org_subareas_in_db($db, $db["id"]);
 		$delete_org_assets = delete_org_assets_in_db($db, $org["id"]);
 		$delete_org_giving = delete_org_giving_in_db($db, $org["id"]);
 		
 		$delete_grants = delete_grants_in_db($db, $org["id"]);
 		
 		return $delete_cnContact && $delete_hqContact && $delete_datainfo && $delete_organization &&
-				$delete_org_geos && $delete_org_assets && $delete_org_giving && $delete_grants;
+				$delete_org_geos && $delete_org_subareas && $delete_org_assets && $delete_org_giving && $delete_grants;
 	}
 	
 	function process_organization(&$org, $action) {

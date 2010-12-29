@@ -1,20 +1,20 @@
 <?php
-	define("JSON_ORG_FILE", "./MetaData/Organization.json");
-	define("JSON_DATAINFO_FILE", "./MetaData/DataInfo.json");
-	define("JSON_GRANT_FILE", "./MetaData/Grant.json");
+	define("JSON_ORG_FILE",			"./MetaData/Organization.json");
+	define("JSON_DATAINFO_FILE",	"./MetaData/DataInfo.json");
+	define("JSON_GRANT_FILE",		"./MetaData/Grant.json");
 
-	define("DB_NAME", "chinafundseeker");
-	define("DB_ADMIN", "cfs_admin");
-	define("DB_PSWD", "bA55nw7H4xeDmvn2");
+	define("DB_NAME",				"chinafundseeker");
+	define("DB_ADMIN",				"cfs_admin");
+	define("DB_PSWD",				"bA55nw7H4xeDmvn2");
 	
-	define("SELECT_HINT", "[ Select One ]");
+	define("SELECT_HINT",			"[ Select One ]");
 	
-	define("VALID_USER", "valid_user");
+	define("VALID_USER",			"valid_user");
 	
 	$isGpc = get_magic_quotes_gpc();
 	
 	// check $str is set before GetString
-	function FilterString($str) {
+	function FilterString(&$str) {
 		if (is_string($str)) {
 			global $isGpc;
 			if (!$isGpc)
@@ -53,7 +53,7 @@
 		$cssHtml = "";
 		if (is_array($cssFiles)) {
 			foreach ($cssFiles as $cssFile) {
-				$cssHtml .= "<link rel='stylesheet' type='text/css' href='./Css/$cssFile' />";
+				$cssHtml .= "<link rel='stylesheet' type='text/css' href='./css/$cssFile' />";
 			}
 		}
 		
@@ -90,7 +90,7 @@ INDEX_LINK;
 		$jsHtml = "";
 		if (is_array($jsFiles)) {
 			foreach ($jsFiles as $jsFile) {
-				$jsHtml .= "<script type='text/javascript' src='./Js/$jsFile'></script>";
+				$jsHtml .= "<script type='text/javascript' src='./js/$jsFile'></script>";
 			}
 		}
 		

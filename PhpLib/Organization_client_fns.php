@@ -1,21 +1,36 @@
 <?php
 	// this file contains functions that
-	// make translation between html variables and php variables
+	// makes translation between html variables and php variables
 	require_once("../PhpLib/Default.php");
 	require_once("../PhpLib/DataInfo_client_fns.php");
 	
-	function get_org_geos_from_form($post) {
-		$geos = array();
+	// ensure to check $post_field is not empty
+	function get_org_fields_from_form($post_fields, $name) {
+		$fields = array();
 		
-		if (isset($post["Geos"])) {
-			$post_geos = $post["Geos"];
-			$count = count($post_geos);
-			for ($i = 0; $i < $count; $i++) {
-				$geos[$i]["geo"] = $post_geos[$i];
-			}
+		$count = count($post_fields);
+		for ($i = 0; $i < $count; $i++) {
+			$fields[$i][$name] = $post_fields[$i];
 		}
+		return $fields;
+	}
+	
+	function get_org_geos_from_form($post) {
+		if (isset($post["Geos"]))
+			$geos = get_org_fields_from_form($post["Geos"], "geo");
+		else
+			$geos = array();
 		
 		return $geos;
+	}
+	
+	function get_org_subareas_from_form($post) {
+		if (isset($post["Subareas"]))
+			$subareas = get_org_fields_from_form($post["Subareas"], "subarea");
+		else
+			$subareas = array();
+		
+		return $subareas;
 	}
 	
 	function get_org_assets_from_form($post) {
@@ -87,7 +102,7 @@
 		$org["granteeType"] = isset($post["GranteeType"]) ? FilterSelect($post["GranteeType"]) : NULL;
 		$org["acceptPublic"] = isset($post["AcceptPublic"]);
 		$org["area"] = isset($post["Area"]) ? FilterSelect($post["Area"]) : NULL;
-		$org["subArea"] = isset($post["SubArea"]) ? FilterSelect($post["SubArea"]) : NULL;
+		$org["subareas"] = get_org_subareas_from_form($post);
 		// for assets
 		$org["assets"] = get_org_assets_from_form($post);
 		
