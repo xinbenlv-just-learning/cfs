@@ -1,0 +1,16 @@
+@charset "utf-8";
+/* CSS Document */
+
+table {
+	text-align: center;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+table thead tr th {
+//	border: thin solid green;
+}
+
+table tbody tr td {
+	border: thin solid black;
+}
