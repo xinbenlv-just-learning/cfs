@@ -7,7 +7,7 @@
 	try {
 		StartSession();
 		echo "<body>";
-			echo "<img id='head' src='./Image/CFS_Logo.jpg' />";
+			echo "<img id='head' src='./img/CFS_Logo.jpg' />";
 			display_login_form("ProcessLogin.php");
 			
 			$login_error_html = isset($_GET["error"]) ? "<p> ".$_GET["error"]." </p>" : NULL;
