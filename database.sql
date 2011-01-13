@@ -236,4 +236,4 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `role`) VALUES
-('admin', 'c58326bef6a67cc55591588c787f7d3f6e3b3e8e', 'admin'),
+('admin', 'c58326bef6a67cc55591588c787f7d3f6e3b3e8e', 'admin')
