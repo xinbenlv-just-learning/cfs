@@ -24,13 +24,29 @@
 		return $geos;
 	}
 	
-	function get_org_subareas_from_form($post) {
-		if (isset($post["Subareas"]))
-			$subareas = get_org_fields_from_form($post["Subareas"], "subarea");
-		else
-			$subareas = array();
-		
-		return $subareas;
+	function get_org_areas_from_form($post, $area_list, $subarea_list) {
+		$areas = array();
+		if (isset($post["Areas"]) && isset($post["Subareas"])) {
+			$post_areas = $post["Areas"];
+			$post_subareas = $post["Subareas"];
+			$num_area = 0;
+			foreach ($post_areas as $index_area => $value_area) {
+				$area_item = &$areas[$num_area];
+				$area = $area_item["area"] = $area_list[$index_area];
+				$area_item["subareas"] = array();
+				
+				// for some area we do not select any subarea
+				if (array_key_exists($index_area, $post_subareas)) {
+					$num_subarea = 0;
+					foreach ($post_subareas[$index_area] as $index_subarea => $value_subarea) {
+						$area_subarea_list = $subarea_list->$area;
+						$area_item["subareas"][$num_subarea++] = $area_subarea_list[$index_subarea];
+					}
+				}
+				$num_area++;
+			}
+		}
+		return $areas;
 	}
 	
 	function get_org_assets_from_form($post) {
@@ -87,6 +103,8 @@
 	}
 	
 	function get_org_from_form($get, $post) {
+		$org_json = json_decode(file_get_contents(JSON_ORG_FILE));			// std class object
+		
 		$org = array();
 		
 		// default values are NULL, so we can use real default value in database
@@ -101,8 +119,7 @@
 		$org["originalCountry"] = isset($post["OriginalCountry"]) ? $post["OriginalCountry"] : NULL;
 		$org["granteeType"] = isset($post["GranteeType"]) ? FilterSelect($post["GranteeType"]) : NULL;
 		$org["acceptPublic"] = isset($post["AcceptPublic"]);
-		$org["area"] = isset($post["Area"]) ? FilterSelect($post["Area"]) : NULL;
-		$org["subareas"] = get_org_subareas_from_form($post);
+		$org["areas"] = get_org_areas_from_form($post, $org_json->AreaList, $org_json->SubareaList);
 		// for assets
 		$org["assets"] = get_org_assets_from_form($post);
 		

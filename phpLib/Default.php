@@ -87,7 +87,7 @@ INDEX_LINK;
 	}
 	
 	function display_html_footer($jsFiles = NULL) {
-		$jsHtml = "";
+		$jsHtml = "<script type='text/javascript' src='./js/jQuery/1.4.3.min.js'></script>";
 		if (is_array($jsFiles)) {
 			foreach ($jsFiles as $jsFile) {
 				$jsHtml .= "<script type='text/javascript' src='./js/$jsFile'></script>";

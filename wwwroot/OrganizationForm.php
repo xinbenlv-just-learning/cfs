@@ -22,5 +22,5 @@
 		echo $ex->getMessage();
 	}
 	
-	display_html_footer(array("jquery-1.4.3.min.js", "Default.js", "OrganizationForm.js"));
+	display_html_footer(array("Default.js", "OrganizationForm.js"));
 ?>

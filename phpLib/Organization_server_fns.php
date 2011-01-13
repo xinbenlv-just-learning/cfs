@@ -59,21 +59,35 @@
 		return $giving;
 	}
 	
-	function get_subareas_from_db($db, $org_id) {
-		$query = "select * from organization_subareas where organization_id = $org_id";
+	function get_area_subareas_from_db($db, $area_id) {
+		$query = "select * from area_subareas where area_id = $area_id";
 		$result = $db->query($query);
 		
-		$subAreas = array();
+		$subareas = array();
+		for ($i = 0; $i < $result->num_rows; $i++) {
+			$row = $result->fetch_assoc();
+			$subareas[$i] = $row["subarea"];
+		}
+		
+		return $subareas;
+	}
+	
+	function get_areas_from_db($db, $org_id) {
+		$query = "select * from organization_areas where org_id = $org_id";
+		$result = $db->query($query);
+		
+		$areas = array();
 		for ($i = 0; $i < $result->num_rows; $i++) {
 			$row = $result->fetch_assoc();
 			
-			$subAreas[$i] = array();
-			$subAreas[$i]["id"] = intval($row["id"]);
-			$subAreas[$i]["org_id"] = intval($row["organization_id"]);
-			$subAreas[$i]["subarea"] = GetOriginalString($row["subarea_funding"]);
+			$areas[$i] = array();
+			$areas[$i]["id"] = intval($row["id"]);
+			$areas[$i]["org_id"] = intval($row["org_id"]);
+			$areas[$i]["area"] = GetOriginalString($row["area"]);
+			$areas[$i]["subareas"] = get_area_subareas_from_db($db, $areas[$i]["id"]);
 		}
 		
-		return $subAreas;
+		return $areas;
 	}
 	
 	function get_contact_from_db($db, $id) {
@@ -107,8 +121,7 @@
 			$org["originalCountry"] = GetOriginalString($row["original_country"]);
 			$org["granteeType"] = GetOriginalString($row["grantee_type"]);
 			$org["acceptPublic"] = $row["accept_public"];
-			$org["area"] = GetOriginalString($row["area_funding"]);
-			$org["subareas"] = get_subareas_from_db($db, $org["id"]);
+			$org["areas"] = get_areas_from_db($db, $org["id"]);
 			
 			$org["assets"] = get_org_assets_from_db($db, $row["id"]);
 			$org["giving"] = get_org_giving_from_db($db, $row["id"]);

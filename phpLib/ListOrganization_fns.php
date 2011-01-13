@@ -11,7 +11,6 @@ echo <<< TABLE_HEADER
 					<th> Organization Id </th>
 					<th> Organization Name </th>
 					<th> Organization Type </th>
-					<th> Area </th>
 					<th> Collector </th>
 					<th> Reviewer </th>
 					<th> Status </th>
@@ -34,7 +33,6 @@ echo <<< TABLE_BODY
 					<td> $org[id] </td>
 					<td> $org[name] </td>
 					<td> $org[type] </td>
-					<td> $org[area] </td>
 					<td> $datainfo[collector] </td>
 					<td> $datainfo[reviewer] </td>
 					<td> $datainfo[status] </td>

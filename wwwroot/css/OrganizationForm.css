@@ -50,6 +50,10 @@ table.Organization > tbody tr td.first > textarea {
 	width: 100%;
 }
 
+table.Organization > tbody div.SubareaList {
+	border: 1px solid black;
+}
+
 table.Assets {
 	width: 100%;
 	border-collapse: collapse;

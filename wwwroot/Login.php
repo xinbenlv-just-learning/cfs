@@ -18,5 +18,5 @@
 		echo $ex->getMessage();
 	}
 	
-	display_html_footer(array("jquery-1.4.3.min.js", "Default.js", "Login.js"));
+	display_html_footer(array("Default.js", "Login.js"));
 ?>

@@ -20,5 +20,5 @@
 		echo $ex->getMessage();
 	}
 	
-	display_html_footer(array("jquery-1.4.3.min.js", "ListGrant.js"));
+	display_html_footer(array("ListGrant.js"));
 ?>

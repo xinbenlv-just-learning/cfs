@@ -130,6 +130,66 @@ echo <<< ACCEPT
 ACCEPT;
 	}
 	
+	function find_subarea($subarea, $area_item) {
+		if (is_array($area_item)) {
+			foreach ($area_item["subareas"] as $subarea_checked)
+				if ($subarea_checked == $subarea)
+					return true;
+		}
+		return false;
+	}
+	
+	function find_area_item($area, $areas) {
+		foreach ($areas as $area_item)
+			if ($area_item["area"] == $area)
+				return $area_item;
+		return NULL;
+	}
+	
+	function display_areas($areas, $area_list, $subarea_list) {
+		$area_list_html = "<div class='ScrollCheckbox'>";
+		for ($i = 0; $i < count($area_list); $i++) {
+			$area = $area_list[$i];
+			$area_item = find_area_item($area, $areas);
+			$area_checked = ($area_item != NULL) ? "checked='checked'" : "";
+			$area_list_html .=	"<div class='item'>
+									<label>
+										<input type='checkbox' name='Areas[$i]' class='area' $area_checked />
+										$area
+									</label>";
+			$area_subareas = $subarea_list->$area;
+			$numSubarea = count($area_subareas);
+			if ($numSubarea > 0) {
+				$subarea_list_html = "<div class='item SubareaList'>";
+				for ($j = 0; $j < $numSubarea; $j++) {
+					$subarea = $area_subareas[$j];
+					$subarea_checked = find_subarea($subarea, $area_item) ? "checked='checked'" : "";
+					$subarea_list_html .=	"<div class='item'>
+												<label>
+													<input type='checkbox' name='Subareas[$i][$j]' class='subarea' $subarea_checked />
+													$subarea
+												</label>
+											</div>";
+				}
+				$subarea_list_html .= "</div>";
+				$area_list_html .= $subarea_list_html;
+			}
+			$area_list_html .=	" </div>";
+		}
+		$area_list_html .= "</div>";
+		
+echo <<< AREAS
+		<tr>
+			<td class="first"> Area of Fuding </td>
+			<td class="first AreaList">
+				$area_list_html
+			</td>
+			<td class="firts"> Required </td>
+		</tr>
+AREAS;
+	}
+	
+	// todo: remove them
 	function display_area_funding($area, $area_list) {
 		$area_list_html = create_select_option($area, $area_list, "Area");
 		
@@ -340,9 +400,12 @@ CONTACT;
 			display_original_country(isset($org["originalCountry"]) ? $org["originalCountry"] : NULL);
 			display_grantee_type(isset($org["granteeType"]) ? $org["granteeType"] : NULL, $org_json->GranteeTypeList);
 			display_accept_public(isset($org["acceptPublic"]) ? $org["acceptPublic"] : true);
-			display_area_funding(isset($org["area"]) ? $org["area"] : NULL, $org_json->AreaList);
-			display_subarea_funding(isset($org["subareas"]) ? $org["subareas"] : array(),
-									isset($org["area"]) ? $org_json->SubareaList->$org["area"] : array());
+			
+			display_areas(isset($org["areas"]) ? $org["areas"] : NULL, $org_json->AreaList, $org_json->SubareaList);
+			//display_area_funding(isset($org["area"]) ? $org["area"] : NULL, $org_json->AreaList);
+			//display_subarea_funding(isset($org["subareas"]) ? $org["subareas"] : array(),
+			//						isset($org["area"]) ? $org_json->SubareaList->$org["area"] : array());
+			
 			display_total_assets(isset($org["assets"]) ? $org["assets"] : NULL);
 			display_total_giving(isset($org["giving"]) ? $org["giving"] : NULL);
 			display_num_offices(isset($org["numOffices"]) ? $org["numOffices"] : NULL);
@@ -365,17 +428,7 @@ echo <<< FORM_FOOTER
 	</form>
 FORM_FOOTER;
 	}
-	
-	function save_json_to_html($json_list, $id) {
-		$json_list_html = json_encode($json_list);
 		
-echo <<< JSON
-		<span id="$id" style="display:none;">
-			$json_list_html
-		</span>
-JSON;
-	}
-	
 	function set_hidden_ids_html($org) {
 		$cnContact_id = isset($org["cnContact"]["id"]) ? $org["cnContact"]["id"] : NULL;
 		$hqContact_id = isset($org["hqContact"]["id"]) ? $org["hqContact"]["id"] : NULL;
@@ -419,7 +472,5 @@ HIDDEN;
 		
 		if ($action == "update")
 			echo "<a href='./GrantForm.php?action=add&org_id=$org[id]'> Add a Grant </a>";
-		
-		save_json_to_html($org_json->SubareaList, "JsonSubareaList");
 	}
 ?>

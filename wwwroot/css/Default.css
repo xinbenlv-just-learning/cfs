@@ -43,3 +43,18 @@ div.Multiple input {
 	margin: 4px 0px;
 	float: left;
 }
+
+
+div.ScrollCheckbox {
+	height: 300px;
+	overflow: auto;
+}
+
+div.ScrollCheckbox div.item {
+	margin: 0px auto;
+}
+
+div.ScrollCheckbox div.item > div.item {
+	margin-left: 40px;
+	margin-right: 40px;
+}

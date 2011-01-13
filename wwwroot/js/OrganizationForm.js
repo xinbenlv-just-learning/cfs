@@ -1,13 +1,11 @@
 // JavaScript Document
 
 $(document).ready(function() {
+	// for Geographics
 	RegisterMultiple();
 	
-	var jsonSubareaList = $.parseJSON($("span#JsonSubareaList").text());
-	$("td.AreaList select").change(function() {
-		var area = $("option:selected", this).text().trim();
-		$("td.SubareaList").empty().createMultipleSelect(jsonSubareaList[area], "Subareas");
-	});
+	// for Area and Subarea of funding
+	RegisterAreaSubareaFunding();
 	
 	$("input.AddAssets").click(function() {
 		$("table.Assets").appendAssets();
@@ -48,6 +46,27 @@ function RegisterMultiple() {
 		
 		$(".RemoveAllButton", this).click(function() {
 			sourceSelect.append($("option", selectedSelect).attr("selected", "selected"));
+		});
+	});
+}
+
+function RegisterAreaSubareaFunding() {
+	$("td.AreaList div.SubareaList").each(function(index, value) {
+		var area = $(this).parent();
+		var subarea = this;
+		
+		if (!$("input:checkbox.area", area).attr("checked"))
+			$(this).hide();
+		
+		$("input:checkbox.area", area).change(function() {
+			if ($(this).attr("checked")) {
+				// show subarea list if it has
+				$(subarea).slideDown();
+			} else {
+				// uncheck subarea list and hide it
+				$("input:checkbox.subarea", subarea).attr("checked", false);
+				$(subarea).slideUp();
+			}
 		});
 	});
 }
