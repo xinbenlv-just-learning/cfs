@@ -140,7 +140,7 @@ ACCEPT;
 	}
 	
 	function find_area_item($area, $areas) {
-		foreach ($areas as $area_item)
+		foreach ((array)$areas as $area_item)
 			if ($area_item["area"] == $area)
 				return $area_item;
 		return NULL;

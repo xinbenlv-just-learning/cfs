@@ -1,7 +1,8 @@
+
 <?php
-	require_once("../PhpLib/Default.php");
-	require_once("../PhpLib/Organization_client_fns.php");
-	require_once("../PhpLib/ProcessOrganization_fns.php");
+	require_once("../phpLib/Default.php");
+	require_once("../phpLib/Organization_client_fns.php");
+	require_once("../phpLib/ProcessOrganization_fns.php");
 	
 	ValidateUser();
 	
