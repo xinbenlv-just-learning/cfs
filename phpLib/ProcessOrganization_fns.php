@@ -229,7 +229,7 @@
 	}
 	
 	function update_org_areas_in_db($db, $org_id, &$areas) {
-		$delete_org_areas = delete_org_areas_in_db($db, $org_id);
+		$delete_org_areas = delete_org_areas_in_db($db, $org_id, $areas);
 		$insert_org_areas = insert_org_areas_in_db($db, $org_id, $areas);
 		return $delete_org_areas && $insert_org_areas;
 	}
@@ -258,7 +258,7 @@
 		$update_org_giving = update_org_giving_in_db($db, $org["id"], $org["giving"]);
 		
 		return $update_cnContact && $update_hqContact && $update_datainfo && $update_organization &&
-				$update_org_geos && $update_org_areas_subareas && $update_org_assets && $update_org_giving;
+				$update_org_geos && $update_org_areas && $update_org_assets && $update_org_giving;
 	}
 	
 	function delete_contact_in_db($db, $contact) {
