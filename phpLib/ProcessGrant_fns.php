@@ -48,7 +48,8 @@
 	}
 	
 	function update_grant_in_db($db, $grant) {
-		$update_recipients = update_recipients_in_db($db, $grant["recipients"]);
+		//$update_recipients = update_recipients_in_db($db, $grant["recipients"]);
+		$update_recipients = true;
 		$update_datainfo = update_datainfo_in_db($db, $grant["datainfo"]);
 		
 		$query = sprintf("UPDATE `grant`

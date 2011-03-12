@@ -14,7 +14,7 @@
 	$isGpc = get_magic_quotes_gpc();
 	
 	// check $str is set before GetString
-	function FilterString(&$str) {
+	function FilterString($str) {
 		if (is_string($str)) {
 			global $isGpc;
 			if (!$isGpc)
